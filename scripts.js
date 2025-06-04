@@ -1,6 +1,7 @@
 const convertButton = document.querySelector(".convert-button")
 const selectCurrencyToConvert = document.querySelector("#select-currency-to-convert")
 const selectCurrency = document.querySelector("#select-currency")
+const inputCurrency = document.querySelector(".input-currency")
 
 function getAwesomeApi(callback) {
     const xhttp = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
@@ -33,18 +34,26 @@ const currencyNames = {
 }
 
 function convertValues(data) {
-    const inputCurrency = document.querySelector(".input-currency").value
     const currencyValueToConvert = document.querySelector(".currency-value-to-convert")
-    currencyValueToConvert.innerHTML = formatCurrency(selectCurrencyToConvert, inputCurrency)
+    currencyValueToConvert.innerHTML = formatCurrency(selectCurrencyToConvert, inputCurrency.value)
     
     const dataObject = JSON.parse(data)
     for (key in dataObject) {
         
         if (selectCurrencyToConvert.value == "BTC") {
-            result = dataObject[key].bid * inputCurrency
+            result = dataObject[key].bid * inputCurrency.value
         } else {
-            result = inputCurrency / dataObject[key].bid
+            result = inputCurrency.value / dataObject[key].bid
         }
+
+        const currencyValue = document.querySelector(".currency-value")
+
+        if (selectCurrency.value == "BTC") {
+            currencyValue.innerHTML = Intl.NumberFormat('de-DE', {style: "currency", currency: "BTC", maximumFractionDigits: 8}).format(result)
+        } else {
+            currencyValue.innerHTML = formatCurrency(selectCurrency, result)
+        }
+
 
         document.querySelector(".currency-flag-to-convert").src = currencyCountryFlag[selectCurrencyToConvert.value]
         document.querySelector(".currency-flag").src = currencyCountryFlag[selectCurrency.value]
@@ -52,14 +61,14 @@ function convertValues(data) {
         document.querySelector(".currency-name-to-convert").innerHTML = currencyNames[selectCurrencyToConvert.value]
         document.querySelector(".currency-name").innerHTML = currencyNames[selectCurrency.value]
 
-        const currencyValue = document.querySelector(".currency-value")
-        currencyValue.innerHTML = formatCurrency(selectCurrency, result)
     }
 }
 getAwesomeApi(convertValues)
 
 convertButton.addEventListener("click", () => {
-    getAwesomeApi(convertValues)
+    if (validateSelect(selectCurrency, selectCurrencyToConvert) && validateInput(inputCurrency)) {
+        getAwesomeApi(convertValues)
+    }
 })
 
 function displayCurrencyValue() {
@@ -85,13 +94,39 @@ function displayCurrencyValue() {
 }
 displayCurrencyValue()
 
+function validateSelect(opt1, opt2) {
+    if (opt1.value == opt2.value) {
+        opt1.classList.add("invalid-field")
+        opt2.classList.add("invalid-field")
+    } else {
+        return true
+    }
+    opt1.addEventListener("focus", () => {
+        opt1.classList.remove("invalid-field")
+        opt2.classList.remove("invalid-field")
+    })
+}
+
+function validateInput(input) {
+    if (!input.value){
+        input.classList.add("invalid-field")
+        input.placeholder = "Preencha este campo!"
+    } else {
+        return true
+    }
+    input.addEventListener("focus", () => {
+        input.classList.remove("invalid-field")
+        input.placeholder = "ex: 10.000,00"
+    })
+} 
+
 function formatNameCurrency(currency) {
     const index = currency.indexOf("/")
     return currency.slice(0, index)
 }
 
 function formatCurrency(select, currency) {
-    const currencyCodeCountry = {"BRL": "pt-BR", "USD": "en-US", "EUR": "de-DE", "BTC": "en-US"}
+    const currencyCodeCountry = {'BRL': 'pt-BR', 'USD': 'en-US', 'EUR': 'de-DE', 'BTC': 'de-DE'}    
     return Intl.NumberFormat(currencyCodeCountry[select.value], {style: "currency", currency: select.value}).format(currency)
 }
 

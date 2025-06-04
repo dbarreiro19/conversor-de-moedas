@@ -33,11 +33,12 @@ header {
 /* Quotation area */
 .main-quotes {
     margin: 20px;
-    padding: 10px 20px;
+    padding: 20px 10px;
     position: fixed;
     top: 0;
     left: 0;
     background-color: var(--white);
+    border-radius: 20px;
     opacity: .7;
     font-size: .9em;
 }
@@ -71,9 +72,17 @@ label {
     margin-bottom: 10px;
 }
 
+label, select {
+    cursor: pointer;
+}
+
 select, input {
     margin-bottom: 24px;
     padding: 10px;
+}
+
+select:focus, input:focus {
+    border-width: 2px;
 }
 
 button {
@@ -114,7 +123,9 @@ button:hover {
 }
 
 .currency-value, .currency-value-to-convert {
-    color: var(--onyx);
+    font-size: 1.1em;
+    font-weight: 600;
+    color: #747474;
 }
 
 footer {
@@ -149,6 +160,14 @@ footer {
     background-color: #575656;
 }
 
+.invalid-field {
+    border: 2px solid #ff0000;
+}
+
+.invalid-field::placeholder {
+    color: #ff0000;
+}
+
 .bg {
     width: 100%;
     height: 100%;
@@ -164,13 +183,11 @@ footer {
 
 /* Media Queries */
 @media screen and (max-width: 1320px) {
-
     .main-quotes {
         width: 400px;
         margin: 32px auto;
         position: relative;
     }
-
 }
 
 @media screen and (max-width: 720px) {
