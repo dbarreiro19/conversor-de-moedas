@@ -79,10 +79,13 @@ label, select {
 select, input {
     margin-bottom: 24px;
     padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
 }
 
 select:focus, input:focus {
-    border-width: 2px;
+    background-color: #f0f0f0;
+    border-color: #a0a0a0;
 }
 
 button {
@@ -92,6 +95,7 @@ button {
     color: var(--white);
     font-weight: 700;
     border: none;
+    border-radius: 10px;
     transition: all .2s;
     cursor: pointer;
 }
@@ -112,6 +116,7 @@ button:hover {
     align-items: center;
     padding: 12px;
     border: 1px solid var(--silver);
+    border-radius: 10px;
 }
 
 .currency-box div {
@@ -152,6 +157,7 @@ footer {
     margin: 5px;
     color: var(--silver);
     border: 1px solid var(--silver);
+    border-radius: 6px;
     text-decoration: none;
     transition: all .2s;
 }
