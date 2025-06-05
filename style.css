@@ -30,32 +30,39 @@ header {
     text-align: center;
 }
 
-/* Quotation area */
-.main-quotes {
-    margin: 20px;
-    padding: 20px 10px;
+aside {
     position: fixed;
     top: 0;
     left: 0;
-    background-color: var(--white);
-    border-radius: 20px;
-    opacity: .7;
     font-size: .9em;
 }
 
-.main-quotes table caption {
+aside table caption {
     margin-bottom: 10px;
     font-size: 18px;
     font-weight: 700;
     color: var(--cambridge-blue);
 }
 
-.main-quotes table th, .main-quotes table td {
+aside table th, aside table td {
     padding: 2px 10px;
 }
 
-.main-quotes table th {
+aside table th {
     text-align: left;
+}
+
+.aside-items {
+    margin: 20px;
+    padding: 20px 10px;
+    background-color: var(--white);
+    border-radius: 20px;
+    opacity: .7;
+}
+
+.latest-conversions {
+    max-height: 300px;
+    overflow-y: auto;
 }
 
 main {
@@ -189,10 +196,14 @@ footer {
 
 /* Media Queries */
 @media screen and (max-width: 1320px) {
-    .main-quotes {
+    aside {
         width: 400px;
-        margin: 32px auto;
+        margin: auto;
         position: relative;
+    }
+
+    aside table {
+        padding: 10px;
     }
 }
 

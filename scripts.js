@@ -3,6 +3,16 @@ const selectCurrencyToConvert = document.querySelector("#select-currency-to-conv
 const selectCurrency = document.querySelector("#select-currency")
 const inputCurrency = document.querySelector(".input-currency")
 
+let conversionHistoryList = null
+
+if (localStorage.getItem("conversionHistory")) {
+    conversionHistoryList = JSON.parse(localStorage.getItem("conversionHistory"))
+} else {
+    conversionHistoryList = []
+}
+
+console.log(conversionHistoryList)
+
 function getAwesomeApi(callback) {
     const xhttp = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
 
@@ -34,10 +44,12 @@ const currencyNames = {
 }
 
 function convertValues(data) {
+
     const currencyValueToConvert = document.querySelector(".currency-value-to-convert")
     currencyValueToConvert.innerHTML = formatCurrency(selectCurrencyToConvert, inputCurrency.value)
     
     const dataObject = JSON.parse(data)
+
     for (key in dataObject) {
         
         if (selectCurrencyToConvert.value == "BTC") {
@@ -47,28 +59,56 @@ function convertValues(data) {
         }
 
         const currencyValue = document.querySelector(".currency-value")
-
+        
         if (selectCurrency.value == "BTC") {
             currencyValue.innerHTML = Intl.NumberFormat('de-DE', {style: "currency", currency: "BTC", maximumFractionDigits: 8}).format(result)
         } else {
             currencyValue.innerHTML = formatCurrency(selectCurrency, result)
-        }
-
+        }        
 
         document.querySelector(".currency-flag-to-convert").src = currencyCountryFlag[selectCurrencyToConvert.value]
         document.querySelector(".currency-flag").src = currencyCountryFlag[selectCurrency.value]
-
+        
         document.querySelector(".currency-name-to-convert").innerHTML = currencyNames[selectCurrencyToConvert.value]
         document.querySelector(".currency-name").innerHTML = currencyNames[selectCurrency.value]
 
+        if (inputCurrency.value) {
+            const saveConversion = {
+                "from": currencyNames[selectCurrencyToConvert.value],
+                "to": currencyNames[selectCurrency.value],
+                "input": inputCurrency.value,
+                "result": formatCurrency(selectCurrency, result),
+                "date": new Date().toLocaleString()
+            }
+            conversionHistoryList.push(saveConversion)
+            window.localStorage.setItem("conversionHistory", JSON.stringify(conversionHistoryList))
+        }
+        
+        if(window.localStorage.getItem("conversionHistory")) {
+            const conversionHistory = JSON.parse(window.localStorage.getItem("conversionHistory"))
+            document.querySelector(".table-conversion-history").innerHTML = ""
+            for (let i = 0; i < conversionHistory.length; i++) {
+                document.querySelector(".table-conversion-history").innerHTML += `
+                    <tr>
+                        <td>${conversionHistory[i].from}</td>
+                        <td>${conversionHistory[i].to}</td>
+                        <td>${formatCurrency(selectCurrencyToConvert, conversionHistory[i].input)}</td>
+                        <td>${conversionHistory[i].result}</td>
+                        <td>${conversionHistory[i].date}</td>
+                    </tr>
+                `
+            }
+        }
     }
+
+    inputCurrency.value = ""
 }
 getAwesomeApi(convertValues)
 
 convertButton.addEventListener("click", () => {
     if (validateSelect(selectCurrency, selectCurrencyToConvert) && validateInput(inputCurrency)) {
         getAwesomeApi(convertValues)
-    }
+    }    
 })
 
 function displayCurrencyValue() {
