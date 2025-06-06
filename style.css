@@ -50,6 +50,10 @@ aside {
     font-size: .9em;
 }
 
+aside table {
+    margin: auto;
+}
+
 aside table caption {
     margin-bottom: 10px;
     font-size: 18px;
@@ -218,7 +222,7 @@ button:hover {
     }
 
     .aside-items {
-        font-size: .7em;
+        font-size: .75em;
     }
     
 }
