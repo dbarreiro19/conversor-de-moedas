@@ -83,6 +83,7 @@ function convertValues(data) {
         }
         
         if(window.localStorage.getItem("conversionHistory")) {
+            document.querySelector(".currency-conversions").style.display = "inherit"
             const conversionHistory = JSON.parse(window.localStorage.getItem("conversionHistory"))
             document.querySelector(".table-conversion-history").innerHTML = ""
             for (let i = 0; i < conversionHistory.length; i++) {

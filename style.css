@@ -46,7 +46,7 @@ aside {
     width: 500px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    gap: 32px;
     font-size: .9em;
 }
 
@@ -73,15 +73,18 @@ aside table th {
     padding: 25px 20px;
     background-color: var(--white);
     border-radius: 20px;
-    /* opacity: .7; */
 }
 
 .aside-items div {
     overflow-y: auto;
 }
 
+.currency-conversions {
+    display: none;
+}
+
 .latest-conversions {
-    max-height: 300px;    
+    max-height: 300px;
 }
 
 main {
