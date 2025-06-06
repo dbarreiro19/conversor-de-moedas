@@ -11,8 +11,6 @@ if (localStorage.getItem("conversionHistory")) {
     conversionHistoryList = []
 }
 
-console.log(conversionHistoryList)
-
 function getAwesomeApi(callback) {
     const xhttp = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
 

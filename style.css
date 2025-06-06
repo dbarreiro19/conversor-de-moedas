@@ -30,10 +30,23 @@ header {
     text-align: center;
 }
 
+header img {
+    width: 150px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 32px auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 aside {
-    position: fixed;
-    top: 0;
-    left: 0;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     font-size: .9em;
 }
 
@@ -45,7 +58,7 @@ aside table caption {
 }
 
 aside table th, aside table td {
-    padding: 2px 10px;
+    padding: 2px 6px;
 }
 
 aside table th {
@@ -53,22 +66,23 @@ aside table th {
 }
 
 .aside-items {
-    margin: 20px;
-    padding: 20px 10px;
+    padding: 25px 20px;
     background-color: var(--white);
     border-radius: 20px;
-    opacity: .7;
+    /* opacity: .7; */
+}
+
+.aside-items div {
+    overflow-y: auto;
 }
 
 .latest-conversions {
-    max-height: 300px;
-    overflow-y: auto;
+    max-height: 300px;    
 }
 
 main {
     width: 400px;
-    margin: 32px auto;
-    padding: 32px;
+    padding: 40px;
     display: flex;
     flex-direction: column;
     background-color: var(--white);
@@ -80,6 +94,7 @@ label {
 }
 
 label, select {
+    user-select: none;
     cursor: pointer;
 }
 
@@ -104,6 +119,7 @@ button {
     border: none;
     border-radius: 10px;
     transition: all .2s;
+    user-select: none;
     cursor: pointer;
 }
 
@@ -132,45 +148,13 @@ button:hover {
 
 .currency-box img {
     width: 48px;
+    user-select: none;
 }
 
 .currency-value, .currency-value-to-convert {
     font-size: 1.1em;
     font-weight: 600;
     color: #747474;
-}
-
-footer {
-    padding: 10px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    background-color: var(--onyx);
-    color: var(--silver);
-    text-align: center;
-}
-
- footer h3 {
-     margin: 12px;
- }
-
- #developer-tools {
-    width: 400px;
- }
-
-#developer-tools a {
-    display: inline-block;
-    padding: 5px 20px;
-    margin: 5px;
-    color: var(--silver);
-    border: 1px solid var(--silver);
-    border-radius: 6px;
-    text-decoration: none;
-    transition: all .2s;
-}
-
-#developer-tools a:hover {
-    background-color: #575656;
 }
 
 .invalid-field {
@@ -195,15 +179,32 @@ footer {
 }
 
 /* Media Queries */
-@media screen and (max-width: 1320px) {
-    aside {
-        width: 400px;
-        margin: auto;
-        position: relative;
+@media screen and (max-width: 1100px) {
+    header {
+        padding: 10px;
     }
 
-    aside table {
-        padding: 10px;
+    header img {
+        width: 128px;
+    }
+
+    .container {
+        margin: 0px;
+        flex-direction: column;
+        align-items: center;
+        gap: 32px;
+    }
+
+    aside {
+        max-width: 400px;
+        gap: 32px;
+    }
+
+    aside table th, aside table td {
+    padding: 2px;
+}
+    .aside-items {
+        font-size: .8em;
     }
 }
 
